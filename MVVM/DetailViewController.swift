@@ -36,13 +36,13 @@ class DetailViewController: UIViewController, DetailViewModelDelegate {
         nameField.rx_observerEditingChanged()
             >- subscribeNext { value in
                 self.viewModel.name = value
-                self.resultLabel.text = value
+                self.resultLabel.text = self.viewModel.infoText
             } >- disposeBag.addDisposable
         
         amountField.rx_observerEditingChanged()
             >- subscribeNext { value in
                 self.viewModel.amount = value
-                self.resultLabel.text = value
+                self.resultLabel.text = self.viewModel.infoText
             }
             >- disposeBag.addDisposable
         
