@@ -17,6 +17,8 @@ class DetailViewController: UIViewController, DetailViewModelDelegate {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var amountField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
+    @IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var doneBarButtonItem: UIBarButtonItem!
     
     let disposeBag = DisposeBag()
     
@@ -43,6 +45,18 @@ class DetailViewController: UIViewController, DetailViewModelDelegate {
                 self.resultLabel.text = value
             }
             >- disposeBag.addDisposable
+        
+        cancelBarButtonItem.rx_tap()
+            >- subscribeNext {
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+            >- disposeBag.addDisposable
+        
+        doneBarButtonItem.rx_tap()
+            >- subscribeNext {
+                self.viewModel.handleDonePressed()
+            }
+            >- disposeBag.addDisposable
     }
     
     override func didReceiveMemoryWarning() {
@@ -64,18 +78,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate {
     
     func dismissAddView() {
         navigationController?.popViewControllerAnimated(true)
-    }
-    
-    
-    
-    // MARK: - IBActions
-    
-    @IBAction func cancelPressed(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
-    }
-    
-    @IBAction func donePressed(sender: AnyObject) {
-        viewModel.handleDonePressed()
     }
     
 }

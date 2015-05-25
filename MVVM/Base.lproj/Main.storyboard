@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D130a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="j1l-V5-ac4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="j1l-V5-ac4">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -116,11 +116,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Payback" id="leM-U2-cRt">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="GqP-8Z-uEB">
-                            <connections>
-                                <action selector="cancelPressed:" destination="sen-0O-Dnc" id="kR3-OE-lUJ"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="GqP-8Z-uEB"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="pGH-Ec-IiB">
                             <connections>
                                 <action selector="donePressed:" destination="sen-0O-Dnc" id="MQb-gk-NIl"/>
@@ -129,6 +125,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="amountField" destination="vwl-pv-vAF" id="VuG-Mj-ePW"/>
+                        <outlet property="cancelBarButtonItem" destination="GqP-8Z-uEB" id="j8E-gN-be4"/>
+                        <outlet property="doneBarButtonItem" destination="pGH-Ec-IiB" id="Qxp-Fx-tvP"/>
                         <outlet property="nameField" destination="dSM-C9-nUu" id="u3N-Q7-V1M"/>
                         <outlet property="resultLabel" destination="ccT-WP-tfu" id="cE6-LC-J1t"/>
                     </connections>

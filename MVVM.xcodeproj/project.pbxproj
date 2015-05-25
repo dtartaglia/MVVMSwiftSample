@@ -24,6 +24,7 @@
 		07ACCA611AD52607006D228C /* Payback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07ACCA5F1AD52607006D228C /* Payback.swift */; };
 		07ACCA631AD527B0006D228C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07ACCA621AD527B0006D228C /* DetailViewController.swift */; };
 		65B0A6211B1354E2002D7CFA /* UITextField+RxExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0A6201B1354E2002D7CFA /* UITextField+RxExt.swift */; };
+		65B0A6511B13665D002D7CFA /* UIBarButtonItem+RxExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0A6501B13665D002D7CFA /* UIBarButtonItem+RxExt.swift */; };
 		808995762BE0DB876DFDB267 /* Pods_MVVMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 071B14121F3068EC0A058262 /* Pods_MVVMTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		9A50089BE42C887BD884DEDD /* Pods_MVVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFAFCD423C2215679CEC5565 /* Pods_MVVM.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		5E6ED16BC68C064973D2C37B /* Pods-MVVM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVM.release.xcconfig"; path = "Pods/Target Support Files/Pods-MVVM/Pods-MVVM.release.xcconfig"; sourceTree = "<group>"; };
 		65B0A61D1B1353EE002D7CFA /* RxCocoaExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoaExt.framework; path = "RxCocoaExt/build/Debug-iphoneos/RxCocoaExt.framework"; sourceTree = "<group>"; };
 		65B0A6201B1354E2002D7CFA /* UITextField+RxExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+RxExt.swift"; sourceTree = "<group>"; };
+		65B0A6501B13665D002D7CFA /* UIBarButtonItem+RxExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+RxExt.swift"; sourceTree = "<group>"; };
 		E182630BFBF5FCB4944E9CF3 /* Pods-MVVM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MVVM/Pods-MVVM.debug.xcconfig"; sourceTree = "<group>"; };
 		FFAFCD423C2215679CEC5565 /* Pods_MVVM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -178,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				65B0A6201B1354E2002D7CFA /* UITextField+RxExt.swift */,
+				65B0A6501B13665D002D7CFA /* UIBarButtonItem+RxExt.swift */,
 			);
 			path = RxCocoaExt;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				07ACCA631AD527B0006D228C /* DetailViewController.swift in Sources */,
 				07ACCA331AD523EE006D228C /* AppDelegate.swift in Sources */,
 				07ACCA571AD52489006D228C /* MasterTableViewController.swift in Sources */,
+				65B0A6511B13665D002D7CFA /* UIBarButtonItem+RxExt.swift in Sources */,
 				07ACCA601AD52607006D228C /* Context.swift in Sources */,
 				07ACCA5B1AD52570006D228C /* DetailViewModel.swift in Sources */,
 				65B0A6211B1354E2002D7CFA /* UITextField+RxExt.swift in Sources */,

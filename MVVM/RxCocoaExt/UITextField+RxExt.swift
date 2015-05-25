@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Carlos García. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 
 
@@ -47,7 +47,7 @@ class ControlTarget: Disposable {
         control?.removeTarget(self, action: "action:", forControlEvents: .EditingChanged)
     }
     
-    func action(sender: AnyObject!) {
+    func action(sender: AnyObject) {
         callback()
     }
 }
