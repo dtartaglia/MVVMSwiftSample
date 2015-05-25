@@ -6,7 +6,7 @@ import RxSwift
 public class DetailViewModel {
 
     public let context: Context = Context.defaultContext
-    public var title = "New Payback"
+    private (set) var title = "New Payback"
     public var name = "" {
         didSet {
             updateInfoText()
