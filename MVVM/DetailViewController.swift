@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+
 
 class DetailViewController: UIViewController, DetailViewModelDelegate {
     
@@ -15,6 +18,12 @@ class DetailViewController: UIViewController, DetailViewModelDelegate {
     @IBOutlet weak var amountField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
     
+    let disposeBag = DisposeBag()
+    
+    deinit {
+        disposeBag.dispose()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = viewModel.title
@@ -22,20 +31,24 @@ class DetailViewController: UIViewController, DetailViewModelDelegate {
         amountField.text = viewModel.amount
         nameField.becomeFirstResponder()
         
-        nameField.addTarget(self, action: "nameChanged", forControlEvents: UIControlEvents.EditingChanged)
-        amountField.addTarget(self, action: "ammountChanged", forControlEvents: UIControlEvents.EditingChanged)
+        nameField.rx_observerEditingChanged()
+            >- subscribeNext { value in
+                self.viewModel.name = value
+                self.resultLabel.text = value
+            } >- disposeBag.addDisposable
+        
+        amountField.rx_observerEditingChanged()
+            >- subscribeNext { value in
+                self.viewModel.amount = value
+                self.resultLabel.text = value
+            }
+            >- disposeBag.addDisposable
     }
     
-    func nameChanged() {
-        viewModel.name = nameField.text
-        resultLabel.text = viewModel.infoText
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        disposeBag.dispose()
     }
-    
-    func ammountChanged() {
-        viewModel.amount = amountField.text
-        resultLabel.text = viewModel.infoText
-    }
-    
     
     // MARK: - AddViewModelDelegate
     
@@ -64,5 +77,5 @@ class DetailViewController: UIViewController, DetailViewModelDelegate {
     @IBAction func donePressed(sender: AnyObject) {
         viewModel.handleDonePressed()
     }
-
+    
 }
