@@ -1,20 +1,26 @@
 
 import Foundation
+import RxSwift
+
 
 public class DetailViewModel {
 
     public let context: Context = Context.defaultContext
     public var title = "New Payback"
-    public var name = ""
-    public var amount = ""
-    public weak var delegate: DetailViewModelDelegate?
-    
-    public var infoText: String {
-        let names = nameComponents
-        let amount = (self.amount as NSString).doubleValue
-        return "\(name)\n\(amount)"
+    public var name = "" {
+        didSet {
+            updateInfoText()
+        }
     }
-    
+    public var amount = "" {
+        didSet {
+            updateInfoText()
+        }
+    }
+    public weak var delegate: DetailViewModelDelegate?
+
+    let infoText = Variable("")
+
     private var index: Int = -1
     
     var isNew: Bool {
@@ -35,6 +41,7 @@ public class DetailViewModel {
         let payback = context.paybacks[index]
         name = payback.firstName + " " + payback.lastName
         amount = "\(payback.amount)"
+        updateInfoText()
     }
     
     public func handleDonePressed() {
@@ -53,6 +60,12 @@ public class DetailViewModel {
             }
             delegate?.dismissAddView()
         }
+    }
+    
+    private func updateInfoText() {
+        let amount = (self.amount as NSString).doubleValue
+        let value = "\(name)\n\(amount)"
+        infoText.next(value)
     }
     
     private var nameComponents : [String] {
