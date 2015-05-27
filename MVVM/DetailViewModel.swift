@@ -1,104 +1,89 @@
+//
+//  DetailViewModel.swift
+//  MVVM
+//
+//  Created by Daniel Tartaglia on 5/27/15.
+//  Copyright (c) 2015 Carlos García. All rights reserved.
+//
 
 import Foundation
 import RxSwift
 
 
-public class DetailViewModel {
+struct DetailViewModel {
 
-    public let context: Context = Context.defaultContext
-    private (set) var title = "New Payback"
-    public var name = "" {
-        didSet {
-            updateInfoText()
-        }
-    }
-    public var amount = "" {
-        didSet {
-            updateInfoText()
-        }
-    }
-    public weak var delegate: DetailViewModelDelegate?
+	init() {
+		title = "New Payback"
+		index = nil
+		payback = Payback()
+	}
 
-    let infoText = Variable("")
+	init(payback: Payback, atIndex index: Int) {
+		title = "Edit Payback"
+		self.index = index
+		self.payback = payback
+	}
 
-    private var index: Int = -1
-    
-    var isNew: Bool {
-        return index == -1
-    }
-    
-    // new initializer
-    public init(delegate: DetailViewModelDelegate) {
-        self.delegate = delegate
-    }
-    
-    // edit initializer
-    public convenience init(delegate: DetailViewModelDelegate, index: Int) {
-        self.init(delegate: delegate)
-        self.index = index
-        println(index)
-        title = "Edit Payback"
-        let payback = context.paybacks[index]
-        name = payback.firstName + " " + payback.lastName
-        amount = "\(payback.amount)"
-        updateInfoText()
-    }
-    
-    public func handleDonePressed() {
-        if !validateName() {
-            delegate?.showInvalidName()
-        }
-        else if !validateAmount() {
-            delegate?.showInvalidAmount()
-        }
-        else {
-            if isNew {
-                addPayback()
-            }
-            else {
-                savePayback()
-            }
-            delegate?.dismissAddView()
-        }
-    }
-    
-    private func updateInfoText() {
-        let amount = (self.amount as NSString).doubleValue
-        let value = "\(name)\n\(amount)"
-        infoText.next(value)
-    }
-    
-    private var nameComponents : [String] {
-        return name.componentsSeparatedByString(" ").filter { !$0.isEmpty }
-    }
-    
-    
-    func validateName() -> Bool {
-        return nameComponents.count >= 2
-    }
-    
-    func validateAmount() -> Bool {
-        let value = (amount as NSString).doubleValue
-        return value.isNormal && value > 0
-    }
-    
-    func addPayback() {
-        let names = nameComponents
-        let amount = (self.amount as NSString).doubleValue
-        let payback = Payback(firstName: names[0], lastName: names[1], createdAt: NSDate(), amount: amount)
-        context.addPayback(payback)
-    }
-    
-    func savePayback() {
-        let names = nameComponents
-        let amount = (self.amount as NSString).doubleValue
-        context.editPayback(index, firstName: names[0], lastname: names[1], amount: amount, updated: NSDate())
-    }
-    
-}
+	let index: Int?
+	var canceled = false
 
-public protocol DetailViewModelDelegate: class {
-    func dismissAddView()
-    func showInvalidName()
-    func showInvalidAmount()
+	let title: String
+	let invalidNameMessage = "Invalid name. Must be at least first and last."
+	let invalidAmountMessage = "Invalid amount. Must be some amount greater than zero."
+
+	func getNameText() -> String? {
+		if count(payback.firstName) > 0 || count(payback.lastName) > 0 {
+			return payback.firstName + " " + payback.lastName
+		}
+		else {
+			return nil
+		}
+	}
+
+	func getAmountText() -> String? {
+		if payback.amount != 0 {
+			return NSString(format: "%0.2f", payback.amount) as String
+		}
+		else {
+			return nil
+		}
+	}
+
+	func convertStringToName(value: String?) -> (firstName: String, lastName: String) {
+		var firstName = ""
+		var lastName = ""
+		if let value = value {
+			let names = split(value) {$0 == " "}
+			if names.count > 0 {
+				firstName = names[0]
+			}
+			if names.count > 1 {
+				lastName = " ".join(names[1 ..< names.count])
+			}
+		}
+		return (firstName, lastName)
+	}
+
+	func convertStringToAmount(value: String?) -> Double {
+		var result: Double = 0.0
+		if let value = value {
+			result = value.toDouble() ?? 0
+		}
+		return result
+	}
+
+	func configureResultTextFromName(name: (firstName: String, lastName: String), amount: Double) -> String {
+		return name.firstName + " " + name.lastName + "\n" + (NSString(format: "%0.2f", amount) as String)
+	}
+
+	func nameValid(firstName: String, _ lastName: String) -> Bool {
+		return firstName != "" && lastName != ""
+	}
+
+	func amountValid(amount: Double) -> Bool {
+		return amount > 0
+	}
+
+	var payback = Payback()
+	
 }

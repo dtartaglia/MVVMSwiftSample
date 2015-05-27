@@ -37,13 +37,13 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dc9-2R-RvF">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hcM-aX-arn">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -53,10 +53,6 @@
                                 </connections>
                             </tableViewCell>
                         </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="raQ-9t-lTz" id="VAk-yA-Cxz"/>
-                            <outlet property="delegate" destination="raQ-9t-lTz" id="35H-aF-775"/>
-                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Payback" id="RJt-Xz-sRt">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="hDY-Ma-qCs">
@@ -65,6 +61,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addBarButtonItem" destination="hDY-Ma-qCs" id="Chv-1z-m1T"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oxp-km-m0B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -87,7 +86,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Amound" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vwl-pv-vAF">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Amount" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vwl-pv-vAF">
                                 <rect key="frame" x="16" y="136" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -98,7 +97,7 @@
                                     <constraint firstAttribute="height" constant="44" id="faZ-RB-uxo"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -117,11 +116,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Payback" id="leM-U2-cRt">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="GqP-8Z-uEB"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="pGH-Ec-IiB">
-                            <connections>
-                                <action selector="donePressed:" destination="sen-0O-Dnc" id="MQb-gk-NIl"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="pGH-Ec-IiB"/>
                     </navigationItem>
                     <connections>
                         <outlet property="amountField" destination="vwl-pv-vAF" id="VuG-Mj-ePW"/>
@@ -129,9 +124,11 @@
                         <outlet property="doneBarButtonItem" destination="pGH-Ec-IiB" id="Qxp-Fx-tvP"/>
                         <outlet property="nameField" destination="dSM-C9-nUu" id="u3N-Q7-V1M"/>
                         <outlet property="resultLabel" destination="ccT-WP-tfu" id="cE6-LC-J1t"/>
+                        <segue destination="aaP-oe-mdV" kind="unwind" identifier="Unwind" unwindAction="unwindToMaster:" id="mpH-D7-zvd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EoF-g4-5co" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aaP-oe-mdV" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1499" y="445"/>
         </scene>

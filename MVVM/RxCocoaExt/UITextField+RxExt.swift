@@ -13,10 +13,8 @@ import RxSwift
 
 extension UITextField {
     
-    func rx_observerEditingChanged() -> Observable<String> {
+    func rx_textChanged() -> Observable<String?> {
         return AnonymousObservable { observer in
-            MainScheduler.ensureExecutingOnScheduler()
-            
             let target = ControlTarget(control: self) {
                 sendNext(observer, self.text)
             }
@@ -36,7 +34,6 @@ class ControlTarget: Disposable {
         self.control = control
         self.callback = callback
         control.addTarget(self, action: "action:", forControlEvents: .EditingChanged)
-        
     }
     
     deinit {

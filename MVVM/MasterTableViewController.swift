@@ -1,67 +1,72 @@
 //
-//  MasterTableViewController.swift
+//  MasterViewController.swift
 //  MVVM
 //
-//  Created by carlos on 8/4/15.
+//  Created by Daniel Tartaglia on 5/25/15.
 //  Copyright (c) 2015 Carlos García. All rights reserved.
 //
 
 import UIKit
+import RxSwift
+
 
 class MasterTableViewController: UITableViewController {
-    
-    let viewModel = ListViewModel()
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        refresh()
-    }
+	
+	@IBOutlet weak var addBarButtonItem: UIBarButtonItem!
+	
+	var viewModel = MasterTableViewModel()
+	let disposeBag = DisposeBag()
 
-    // MARK: - Table view data source
+	deinit {
+		disposeBag.dispose()
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		// Do any additional setup after loading the view.
+	}
+	
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		disposeBag.dispose()
+	}
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		let detailViewModel: DetailViewModel
+		if let selectedRow = viewModel.selectedRow {
+			detailViewModel = DetailViewModel(payback: viewModel.paybackCollection.paybacks[selectedRow], atIndex: selectedRow)
+			viewModel.selectedRow = nil
+		}
+		else {
+			detailViewModel = DetailViewModel()
+		}
+		let detailViewController = segue.destinationViewController as! DetailViewController
+		detailViewController.viewModel = detailViewModel
+	}
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.items.count
-    }
+	@IBAction func unwindToMaster(sender: UIStoryboardSegue)
+	{
+		let sourceViewController = sender.sourceViewController as! DetailViewController
+		viewModel.checkInsert(sourceViewController.viewModel)
+	}
+}
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
-        
-        let item = viewModel.items[indexPath.row]
-        cell.textLabel?.text = item.title
-        cell.detailTextLabel?.text = item.amount
 
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            viewModel.removePayback(indexPath.row)
-            refresh()
-        }
-    }
-    
-    // MARK: - IBActions
-    
-    func refresh() {
-        viewModel.refresh()
-        tableView.reloadData()
-    }
-    
-    // MARK: - Navigation 
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let vc = segue.destinationViewController as! DetailViewController
-        if segue.identifier == "createSegue" {
-            vc.viewModel = DetailViewModel(delegate: vc)
-        }
-        else if segue.identifier == "editSegue" {
-            vc.viewModel = DetailViewModel(delegate: vc, index: tableView.indexPathForSelectedRow()!.row)
-        }
-        
-    }
-    
+struct MasterTableViewModel {
+	
+	var paybackCollection = PaybackCollection()
+	var selectedRow: Int?
+
+	mutating func checkInsert(detailViewModel: DetailViewModel) {
+		let payback = detailViewModel.payback
+		if payback.isValid && !detailViewModel.canceled {
+			if let selectedRow = detailViewModel.index {
+				paybackCollection.replacePayback(payback, atIndex: selectedRow)
+			}
+			else {
+				paybackCollection.insertPayback(payback)
+			}
+		}
+	}
 }
