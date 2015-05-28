@@ -26,12 +26,13 @@ struct DetailViewModel {
 
 	let index: Int?
 	var canceled = false
+	var payback = Payback()
 
 	let title: String
 	let invalidNameMessage = "Invalid name. Must be at least first and last."
 	let invalidAmountMessage = "Invalid amount. Must be some amount greater than zero."
 
-	func getNameText() -> String? {
+	var nameText: String? {
 		if count(payback.firstName) > 0 || count(payback.lastName) > 0 {
 			return payback.firstName + " " + payback.lastName
 		}
@@ -40,7 +41,7 @@ struct DetailViewModel {
 		}
 	}
 
-	func getAmountText() -> String? {
+	var amountText: String? {
 		if payback.amount != 0 {
 			return NSString(format: "%0.2f", payback.amount) as String
 		}
@@ -48,7 +49,7 @@ struct DetailViewModel {
 			return nil
 		}
 	}
-
+	
 	func convertStringToName(value: String?) -> (firstName: String, lastName: String) {
 		var firstName = ""
 		var lastName = ""
@@ -84,6 +85,5 @@ struct DetailViewModel {
 		return amount > 0
 	}
 
-	var payback = Payback()
 	
 }

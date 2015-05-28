@@ -15,6 +15,7 @@
 		0991E0041B16090300CC3935 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0991E0031B16090300CC3935 /* DetailViewModel.swift */; };
 		65B0A6211B1354E2002D7CFA /* UITextField+RxExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0A6201B1354E2002D7CFA /* UITextField+RxExt.swift */; };
 		65B0A6511B13665D002D7CFA /* UIBarButtonItem+RxExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0A6501B13665D002D7CFA /* UIBarButtonItem+RxExt.swift */; };
+		65CA56411B169F9D0065EAC6 /* MasterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA56401B169F9D0065EAC6 /* MasterViewModel.swift */; };
 		65F7083E1B140231008A9C41 /* MasterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7083D1B140231008A9C41 /* MasterTableViewController.swift */; };
 		65F708401B14023F008A9C41 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7083F1B14023F008A9C41 /* DetailViewController.swift */; };
 		65F708431B140381008A9C41 /* Payback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F708421B140381008A9C41 /* Payback.swift */; };
@@ -51,6 +52,7 @@
 		65B0A61D1B1353EE002D7CFA /* RxCocoaExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoaExt.framework; path = "RxCocoaExt/build/Debug-iphoneos/RxCocoaExt.framework"; sourceTree = "<group>"; };
 		65B0A6201B1354E2002D7CFA /* UITextField+RxExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+RxExt.swift"; sourceTree = "<group>"; };
 		65B0A6501B13665D002D7CFA /* UIBarButtonItem+RxExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+RxExt.swift"; sourceTree = "<group>"; };
+		65CA56401B169F9D0065EAC6 /* MasterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewModel.swift; sourceTree = "<group>"; };
 		65F7083D1B140231008A9C41 /* MasterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterTableViewController.swift; sourceTree = "<group>"; };
 		65F7083F1B14023F008A9C41 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		65F708421B140381008A9C41 /* Payback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payback.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				0991E0031B16090300CC3935 /* DetailViewModel.swift */,
+				65CA56401B169F9D0065EAC6 /* MasterViewModel.swift */,
 			);
 			name = "View Models";
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65CA56411B169F9D0065EAC6 /* MasterViewModel.swift in Sources */,
 				65F708451B1403CD008A9C41 /* PayBackCollection.swift in Sources */,
 				65F7083E1B140231008A9C41 /* MasterTableViewController.swift in Sources */,
 				07ACCA331AD523EE006D228C /* AppDelegate.swift in Sources */,

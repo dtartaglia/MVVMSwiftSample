@@ -17,6 +17,10 @@ struct PaybackCollection {
 		paybacks[index] = payBack
 	}
 	
+	mutating func removePaybackAtIndex(index: Int) {
+		paybacks.removeAtIndex(index)
+	}
+	
 	mutating func insertPayback(payback: Payback) {
 		paybacks.insert(payback, atIndex: 0)
 	}

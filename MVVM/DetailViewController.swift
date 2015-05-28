@@ -12,34 +12,34 @@ import RxCocoa
 
 
 class DetailViewController: UIViewController {
-
+	
 	@IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var doneBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var nameField: UITextField!
 	@IBOutlet weak var amountField: UITextField!
 	@IBOutlet weak var resultLabel: UILabel!
-
+	
 	var viewModel: DetailViewModel!
 	let disposeBag = DisposeBag()
-
+	
 	deinit {
 		disposeBag.dispose()
 	}
-
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		title = viewModel.title
-		nameField.text = viewModel.getNameText()
-		amountField.text = viewModel.getAmountText()
+		nameField.text = viewModel.nameText
+		amountField.text = viewModel.amountText
 
 		let name = nameField.rx_textChanged()
-			>- startWith(viewModel.getNameText())
+			>- startWith(viewModel.nameText)
 			>- map { (text: String?) -> (firstName: String, lastName: String) in
 				return self.viewModel.convertStringToName(text)
 		}
 
 		let amount = amountField.rx_textChanged()
-			>- startWith(viewModel.getAmountText())
+			>- startWith(viewModel.amountText)
 			>- map { (text: String?) -> Double in
 				return self.viewModel.convertStringToAmount(text)
 		}
