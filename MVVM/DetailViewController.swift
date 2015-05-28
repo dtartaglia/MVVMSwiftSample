@@ -34,7 +34,7 @@ class DetailViewController: UIViewController {
 
 		let name = nameField.rx_textChanged()
 			>- startWith(viewModel.nameText)
-			>- map { (text: String?) -> (firstName: String, lastName: String) in
+			>- map { text in
 				return DetailViewModel.convertStringToName(text)
 		}
 
@@ -44,7 +44,7 @@ class DetailViewController: UIViewController {
 				return DetailViewModel.convertStringToAmount(text)
 		}
 
-		combineLatest(name, amount) { (name, amount) -> String in
+		combineLatest(name, amount) { name, amount in
 			return DetailViewModel.configureResultTextFromName(name, amount: amount)
 			}
 			>- resultLabel.rx_subscribeTextTo
@@ -52,7 +52,7 @@ class DetailViewController: UIViewController {
 
 		combineLatest(name, amount) { ($0, $1) }
 			>- sampleLatest(doneBarButtonItem.rx_tap())
-			>- subscribeNext { (name: (firstName: String, lastName: String), amount: Double) in
+			>- subscribeNext { name, amount in
 				if !DetailViewModel.nameValid(name.firstName, name.lastName) {
 					self.warnUser(self.viewModel.invalidNameMessage, aboutTextField: self.nameField)
 				}
