@@ -35,17 +35,17 @@ class DetailViewController: UIViewController {
 		let name = nameField.rx_textChanged()
 			>- startWith(viewModel.nameText)
 			>- map { (text: String?) -> (firstName: String, lastName: String) in
-				return self.viewModel.convertStringToName(text)
+				return DetailViewModel.convertStringToName(text)
 		}
 
 		let amount = amountField.rx_textChanged()
 			>- startWith(viewModel.amountText)
 			>- map { (text: String?) -> Double in
-				return self.viewModel.convertStringToAmount(text)
+				return DetailViewModel.convertStringToAmount(text)
 		}
 
 		combineLatest(name, amount) { (name, amount) -> String in
-			return self.viewModel.configureResultTextFromName(name, amount: amount)
+			return DetailViewModel.configureResultTextFromName(name, amount: amount)
 			}
 			>- resultLabel.rx_subscribeTextTo
 			>- disposeBag.addDisposable
@@ -53,10 +53,10 @@ class DetailViewController: UIViewController {
 		combineLatest(name, amount) { ($0, $1) }
 			>- sampleLatest(doneBarButtonItem.rx_tap())
 			>- subscribeNext { (name: (firstName: String, lastName: String), amount: Double) in
-				if !self.viewModel.nameValid(name.firstName, name.lastName) {
+				if !DetailViewModel.nameValid(name.firstName, name.lastName) {
 					self.warnUser(self.viewModel.invalidNameMessage, aboutTextField: self.nameField)
 				}
-				else if !self.viewModel.amountValid(amount) {
+				else if !DetailViewModel.amountValid(amount) {
 					self.warnUser(self.viewModel.invalidAmountMessage, aboutTextField: self.amountField)
 				}
 				else {

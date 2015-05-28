@@ -153,8 +153,8 @@
 		0991E0021B1608DC00CC3935 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				0991E0031B16090300CC3935 /* DetailViewModel.swift */,
 				65CA56401B169F9D0065EAC6 /* MasterViewModel.swift */,
+				0991E0031B16090300CC3935 /* DetailViewModel.swift */,
 			);
 			name = "View Models";
 			sourceTree = "<group>";

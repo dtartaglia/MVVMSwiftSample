@@ -49,8 +49,9 @@ struct DetailViewModel {
 			return nil
 		}
 	}
-	
-	func convertStringToName(value: String?) -> (firstName: String, lastName: String) {
+
+	// static functions here for namespace reasons.
+	static func convertStringToName(value: String?) -> (firstName: String, lastName: String) {
 		var firstName = ""
 		var lastName = ""
 		if let value = value {
@@ -65,7 +66,7 @@ struct DetailViewModel {
 		return (firstName, lastName)
 	}
 
-	func convertStringToAmount(value: String?) -> Double {
+	static func convertStringToAmount(value: String?) -> Double {
 		var result: Double = 0.0
 		if let value = value {
 			result = value.toDouble() ?? 0
@@ -73,17 +74,16 @@ struct DetailViewModel {
 		return result
 	}
 
-	func configureResultTextFromName(name: (firstName: String, lastName: String), amount: Double) -> String {
+	static func configureResultTextFromName(name: (firstName: String, lastName: String), amount: Double) -> String {
 		return name.firstName + " " + name.lastName + "\n" + (NSString(format: "%0.2f", amount) as String)
 	}
 
-	func nameValid(firstName: String, _ lastName: String) -> Bool {
+	static func nameValid(firstName: String, _ lastName: String) -> Bool {
 		return firstName != "" && lastName != ""
 	}
 
-	func amountValid(amount: Double) -> Bool {
+	static func amountValid(amount: Double) -> Bool {
 		return amount > 0
 	}
-
 	
 }
