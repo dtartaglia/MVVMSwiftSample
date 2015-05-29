@@ -71,8 +71,7 @@ class MasterTableViewController: UITableViewController {
 	}
 
 	// MARK: IBActions
-	@IBAction func unwindToMaster(sender: UIStoryboardSegue)
-	{
+	@IBAction func unwindToMaster(sender: UIStoryboardSegue) {
 		let sourceViewController = sender.sourceViewController as! DetailViewController
 		viewModel.checkInsert(sourceViewController.viewModel)
 		tableView.reloadData()

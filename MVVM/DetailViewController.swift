@@ -39,7 +39,7 @@ class DetailViewController: UIViewController {
 				return DetailViewModel.convertStringToName(text)
 		}
 
-		// this pipe takes what the user entered in the amountFIeld and turns it into a Double
+		// this pipe takes what the user entered in the amountField and turns it into a Double
 		let amount = amountField.rx_text()
 			>- startWith(viewModel.amountText)
 			>- map { (text: String) -> Double in
@@ -53,7 +53,7 @@ class DetailViewController: UIViewController {
 			>- resultLabel.rx_subscribeTextTo
 			>- disposeBag.addDisposable
 
-		// this pipe watches for doneBarButtonItem taps, or if the user taps return while in the amount field and calls the doneAction if either of these events happen
+		// this pipe watches for doneBarButtonItem taps, or if the user taps return while in the amount field, and calls the doneAction if either of these events happen
 		combineLatest(name, amount) { ($0, $1) }
 			>- sampleLatest(merge(returnElements(doneBarButtonItem.rx_tap(), amountField.rx_controlEvents(.EditingDidEndOnExit))))
 			>- subscribeNext { [weak self] name, amount in
