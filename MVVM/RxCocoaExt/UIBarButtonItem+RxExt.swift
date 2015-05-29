@@ -26,8 +26,9 @@ extension UIBarButtonItem {
 @objc
 class BarButtonItemTarget: Disposable {
     
-    weak var barButtonItem: UIBarButtonItem?
-    let callback: () -> Void
+	typealias Callback = () -> Void
+	weak var barButtonItem: UIBarButtonItem?
+    var callback: Callback?
     
     init(barButtonItem: UIBarButtonItem, callback: () -> Void) {
         self.barButtonItem = barButtonItem
@@ -43,10 +44,13 @@ class BarButtonItemTarget: Disposable {
     func dispose() {
         barButtonItem?.target = nil
         barButtonItem?.action = nil
+		callback = nil
     }
     
     func action(sender: AnyObject) {
-        callback()
+		if let callback = callback {
+			callback()
+		}
     }
     
 }

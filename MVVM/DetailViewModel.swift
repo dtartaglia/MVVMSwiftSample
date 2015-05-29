@@ -29,28 +29,29 @@ struct DetailViewModel {
 	var payback = Payback()
 
 	let title: String
-	let invalidNameMessage = "Invalid name. Must be at least first and last."
-	let invalidAmountMessage = "Invalid amount. Must be some amount greater than zero."
 
-	var nameText: String? {
+	var nameText: String {
 		if count(payback.firstName) > 0 || count(payback.lastName) > 0 {
 			return payback.firstName + " " + payback.lastName
 		}
 		else {
-			return nil
+			return ""
 		}
 	}
 
-	var amountText: String? {
+	var amountText: String {
 		if payback.amount != 0 {
 			return NSString(format: "%0.2f", payback.amount) as String
 		}
 		else {
-			return nil
+			return ""
 		}
 	}
 
-	// static functions here for namespace reasons.
+	// static stuff here for namespace reasons.
+	static let invalidNameMessage = "Invalid name. Must be at least first and last."
+	static let invalidAmountMessage = "Invalid amount. Must be some amount greater than zero."
+
 	static func convertStringToName(value: String?) -> (firstName: String, lastName: String) {
 		var firstName = ""
 		var lastName = ""

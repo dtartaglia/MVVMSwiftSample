@@ -13,6 +13,7 @@
 		07ACCA401AD523EE006D228C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07ACCA3E1AD523EE006D228C /* LaunchScreen.xib */; };
 		0991E0011B16038E00CC3935 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0991E0001B16038E00CC3935 /* String+Ext.swift */; };
 		0991E0041B16090300CC3935 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0991E0031B16090300CC3935 /* DetailViewModel.swift */; };
+		65A048901B17FA2C00D06817 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A0488F1B17FA2C00D06817 /* ViewController.swift */; };
 		65B0A6211B1354E2002D7CFA /* UITextField+RxExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0A6201B1354E2002D7CFA /* UITextField+RxExt.swift */; };
 		65B0A6511B13665D002D7CFA /* UIBarButtonItem+RxExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0A6501B13665D002D7CFA /* UIBarButtonItem+RxExt.swift */; };
 		65CA56411B169F9D0065EAC6 /* MasterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA56401B169F9D0065EAC6 /* MasterViewModel.swift */; };
@@ -49,6 +50,7 @@
 		0991E0031B16090300CC3935 /* DetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		515C11690BD55045E7A840FE /* Pods-MVVMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MVVMTests/Pods-MVVMTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5E6ED16BC68C064973D2C37B /* Pods-MVVM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVM.release.xcconfig"; path = "Pods/Target Support Files/Pods-MVVM/Pods-MVVM.release.xcconfig"; sourceTree = "<group>"; };
+		65A0488F1B17FA2C00D06817 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		65B0A61D1B1353EE002D7CFA /* RxCocoaExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoaExt.framework; path = "RxCocoaExt/build/Debug-iphoneos/RxCocoaExt.framework"; sourceTree = "<group>"; };
 		65B0A6201B1354E2002D7CFA /* UITextField+RxExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+RxExt.swift"; sourceTree = "<group>"; };
 		65B0A6501B13665D002D7CFA /* UIBarButtonItem+RxExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+RxExt.swift"; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		07ACCA551AD52420006D228C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				65A0488F1B17FA2C00D06817 /* ViewController.swift */,
 				65F7083D1B140231008A9C41 /* MasterTableViewController.swift */,
 				65F7083F1B14023F008A9C41 /* DetailViewController.swift */,
 			);
@@ -402,6 +405,7 @@
 				65F708451B1403CD008A9C41 /* PayBackCollection.swift in Sources */,
 				65F7083E1B140231008A9C41 /* MasterTableViewController.swift in Sources */,
 				07ACCA331AD523EE006D228C /* AppDelegate.swift in Sources */,
+				65A048901B17FA2C00D06817 /* ViewController.swift in Sources */,
 				65F708401B14023F008A9C41 /* DetailViewController.swift in Sources */,
 				0991E0041B16090300CC3935 /* DetailViewModel.swift in Sources */,
 				65B0A6511B13665D002D7CFA /* UIBarButtonItem+RxExt.swift in Sources */,
@@ -538,8 +542,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RxCocoaExt/build/Debug-iphoneos",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"TRACE_RESOURCES=1",
+				);
 				INFOPLIST_FILE = MVVM/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D TRACE_RESOURCES";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -555,6 +565,7 @@
 				);
 				INFOPLIST_FILE = MVVM/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D TRACE_RESOURCES";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

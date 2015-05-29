@@ -13,7 +13,7 @@ import RxSwift
 
 extension UITextField {
     
-    func rx_textChanged() -> Observable<String?> {
+    func rx_textChanged() -> Observable<String> {
         return AnonymousObservable { observer in
             let target = ControlTarget(control: self) {
                 sendNext(observer, self.text)
@@ -26,9 +26,10 @@ extension UITextField {
 // this must be a public ObjC class for it to be visible to the ObjC runtime.
 @objc
 class ControlTarget: Disposable {
-    
+
+	typealias Callback = () -> Void
     weak var control: UITextField?
-    let callback: () -> Void
+    var callback: Callback?
     
     init(control: UITextField, callback: () -> Void) {
         self.control = control
@@ -42,9 +43,12 @@ class ControlTarget: Disposable {
     
     func dispose() {
         control?.removeTarget(self, action: "action:", forControlEvents: .EditingChanged)
+		callback = nil
     }
     
     func action(sender: AnyObject) {
-        callback()
+		if let callback = callback {
+			callback()
+		}
     }
 }

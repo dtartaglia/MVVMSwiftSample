@@ -40,7 +40,7 @@ class DetailViewController: UIViewController {
 
 		let amount = amountField.rx_textChanged()
 			>- startWith(viewModel.amountText)
-			>- map { (text: String?) -> Double in
+			>- map { (text: String) -> Double in
 				return DetailViewModel.convertStringToAmount(text)
 		}
 
@@ -52,35 +52,37 @@ class DetailViewController: UIViewController {
 
 		combineLatest(name, amount) { ($0, $1) }
 			>- sampleLatest(doneBarButtonItem.rx_tap())
-			>- subscribeNext { name, amount in
+			>- subscribeNext { [weak self] name, amount in
+				MainScheduler.ensureExecutingOnScheduler()
 				if !DetailViewModel.nameValid(name.firstName, name.lastName) {
-					self.warnUser(self.viewModel.invalidNameMessage, aboutTextField: self.nameField)
+					self!.warnUser(DetailViewModel.invalidNameMessage, aboutTextField: self!.nameField)
 				}
 				else if !DetailViewModel.amountValid(amount) {
-					self.warnUser(self.viewModel.invalidAmountMessage, aboutTextField: self.amountField)
+					self!.warnUser(DetailViewModel.invalidAmountMessage, aboutTextField: self!.amountField)
 				}
 				else {
-					self.viewModel.payback = Payback(firstName: name.firstName, lastName: name.lastName, createdAt: self.viewModel.payback.createdAt, updatedAt: NSDate(), amount: amount)
-					self.performSegueWithIdentifier("Unwind", sender: self)
+					self!.viewModel.payback = Payback(firstName: name.firstName, lastName: name.lastName, createdAt: self!.viewModel.payback.createdAt, updatedAt: NSDate(), amount: amount)
+					self!.performSegueWithIdentifier("Unwind", sender: self!)
 				}
 			}
 			>- disposeBag.addDisposable
 
 		cancelBarButtonItem.rx_tap()
-			>- subscribeNext { _ in
-				self.viewModel.canceled = true
-				self.performSegueWithIdentifier("Unwind", sender: self)
+			>- subscribeNext { [weak self] _ in
+				MainScheduler.ensureExecutingOnScheduler()
+				self!.viewModel.canceled = true
+				self!.performSegueWithIdentifier("Unwind", sender: self!)
 			}
 			>- disposeBag.addDisposable
 	}
 
 	func warnUser(message: String, aboutTextField textField: UITextField) {
-		let okAction = UIAlertAction(title: "OK", style: .Default, handler: { _ in
-			self.dismissViewControllerAnimated(true, completion: nil)
+		let okAction = UIAlertAction(title: "OK", style: .Default, handler: { [weak self] _ in
+			self!.dismissViewControllerAnimated(true, completion: nil)
 		})
 		let alert = UIAlertController(title: "Error", message: message, preferredStyle: .Alert)
 		alert.addAction(okAction)
-		self.presentViewController(alert, animated: true, completion: nil)
+		presentViewController(alert, animated: true, completion: nil)
 		textField.becomeFirstResponder()
 	}
 	
