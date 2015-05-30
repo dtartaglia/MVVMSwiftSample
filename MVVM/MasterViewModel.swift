@@ -16,7 +16,6 @@ struct TableViewModel {
 	}
 	var textLabelText: String {
 		let singleLetter = payback.lastName.substringToIndex(payback.lastName.startIndex.successor())
-		
 		return "\(payback.firstName) \(singleLetter)."
 	}
 	
@@ -25,6 +24,7 @@ struct TableViewModel {
 	}
 	
 	private let payback: Payback
+	
 }
 
 struct MasterTableViewModel {

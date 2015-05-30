@@ -26,18 +26,17 @@ class MasterTableViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		tableViewDataSource = RxTableViewDataSource(numberOfRowsInSection: { [weak self] (section) -> Int in
+		tableViewDataSource = RxTableViewDataSource(numberOfRowsInSection: { [weak self] _ in
 			return self!.viewModel.rowCount
-			}, cellForRowAtIndexPath: { [weak self] (indexPath) -> UITableViewCell in
+			}, cellForRowAtIndexPath: { [weak self] indexPath in
 				let result = self!.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
 				let tableViewModel = self!.viewModel.tableViewModelForIndex(indexPath.row)
 				result.textLabel!.text = tableViewModel.textLabelText
 				result.detailTextLabel!.text = tableViewModel.detailTextLabelText
 				return result
 			})
-
 		tableViewDataSource.rx_commitEditingStyleForRowAtIndexPath
-			>- subscribeNext { [weak self] (editingStyle: UITableViewCellEditingStyle, indexPath: NSIndexPath) in
+			>- subscribeNext { [weak self] editingStyle, indexPath in
 				if editingStyle == .Delete {
 					self!.viewModel.removePaybackAtIndex(indexPath.row)
 					self!.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
