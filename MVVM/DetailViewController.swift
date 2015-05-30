@@ -71,7 +71,6 @@ class DetailViewController: UIViewController {
 		// this pipe handles exiting if the user taps the cancelBarButtonItem
 		cancelBarButtonItem.rx_tap()
 			>- subscribeNext { [weak self] _ in
-				MainScheduler.ensureExecutingOnScheduler()
 				self!.viewModel.canceled = true
 				self!.performSegueWithIdentifier("Unwind", sender: self!)
 			}
@@ -80,14 +79,14 @@ class DetailViewController: UIViewController {
 
 	func doneAction(# name: (firstName: String, lastName: String), amount: Double) {
 		if !DetailViewModel.nameValid(name.firstName, name.lastName) {
-			self.warnUser(DetailViewModel.invalidNameMessage, aboutTextField: self.nameField)
+			warnUser(DetailViewModel.invalidNameMessage, aboutTextField: nameField)
 		}
 		else if !DetailViewModel.amountValid(amount) {
-			self.warnUser(DetailViewModel.invalidAmountMessage, aboutTextField: self.amountField)
+			warnUser(DetailViewModel.invalidAmountMessage, aboutTextField: amountField)
 		}
 		else {
-			self.viewModel.payback = Payback(firstName: name.firstName, lastName: name.lastName, createdAt: self.viewModel.payback.createdAt, updatedAt: NSDate(), amount: amount)
-			self.performSegueWithIdentifier("Unwind", sender: self)
+			viewModel.payback = Payback(firstName: name.firstName, lastName: name.lastName, createdAt: viewModel.payback.createdAt, updatedAt: NSDate(), amount: amount)
+			performSegueWithIdentifier("Unwind", sender: self)
 		}
 	}
 
