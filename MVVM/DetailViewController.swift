@@ -85,7 +85,7 @@ class DetailViewController: UIViewController {
 			warnUser(DetailViewModel.invalidAmountMessage, aboutTextField: amountField)
 		}
 		else {
-			viewModel.payback = Payback(firstName: name.firstName, lastName: name.lastName, createdAt: viewModel.payback.createdAt, updatedAt: NSDate(), amount: amount)
+			viewModel.updatePayback(name: name, amount: amount)
 			performSegueWithIdentifier("Unwind", sender: self)
 		}
 	}

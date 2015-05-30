@@ -48,6 +48,10 @@ struct DetailViewModel {
 		}
 	}
 
+	mutating func updatePayback(# name: (firstName: String, lastName: String), amount: Double) {
+		payback = Payback(firstName: name.firstName, lastName: name.lastName, createdAt: payback.createdAt, updatedAt: NSDate(), amount: amount)
+	}
+
 	// static stuff here for namespace reasons.
 	static let invalidNameMessage = "Invalid name. Must be at least first and last."
 	static let invalidAmountMessage = "Invalid amount. Must be some amount greater than zero."
