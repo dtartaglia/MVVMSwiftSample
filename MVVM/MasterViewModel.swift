@@ -36,6 +36,17 @@ struct MasterTableViewModel {
 		return paybackCollection.paybacks.count
 	}
 	
+	var detailViewModel: DetailViewModel {
+		let result: DetailViewModel
+		if let selectedRow = selectedRow {
+			result = DetailViewModel(payback: paybackCollection.paybacks[selectedRow], atIndex: selectedRow)
+		}
+		else {
+			result =  DetailViewModel()
+		}
+		return result
+	}
+
 	func tableViewModelForIndex(index: Int) -> TableViewModel {
 		return TableViewModel(payback: paybackCollection.paybacks[index])
 	}
@@ -55,4 +66,5 @@ struct MasterTableViewModel {
 			}
 		}
 	}
+
 }

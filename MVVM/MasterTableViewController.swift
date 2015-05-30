@@ -48,32 +48,39 @@ class MasterTableViewController: UITableViewController {
 		tableViewDelegate = RxTableViewDelegate()
 		tableViewDelegate.rx_didSelectRowAtIndexPath
 			>- subscribeNext { [weak self] indexPath in
-				self!.viewModel.selectedRow = indexPath.row
-				self!.performSegueWithIdentifier("SelectSegue", sender: self)
+				self!.segueToDetailWithSelected(indexPath.row)
 			}
 			>- disposeBag.addDisposable
 
 		tableView.dataSource = tableViewDataSource
 		tableView.delegate = tableViewDelegate
+
+		addBarButtonItem.rx_tap()
+			>- subscribeNext { [weak self] in
+				self!.segueToDetailWithSelected(nil)
+		}
+	}
+	
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		viewModel.selectedRow = nil
 	}
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		let detailViewModel: DetailViewModel
-		if let selectedRow = viewModel.selectedRow {
-			detailViewModel = DetailViewModel(payback: viewModel.paybackCollection.paybacks[selectedRow], atIndex: selectedRow)
-			viewModel.selectedRow = nil
-		}
-		else {
-			detailViewModel = DetailViewModel()
-		}
 		let detailViewController = segue.destinationViewController as! DetailViewController
-		detailViewController.viewModel = detailViewModel
+		detailViewController.viewModel = viewModel.detailViewModel
 	}
 
 	// MARK: IBActions
 	@IBAction func unwindToMaster(sender: UIStoryboardSegue) {
-		let sourceViewController = sender.sourceViewController as! DetailViewController
-		viewModel.checkInsert(sourceViewController.viewModel)
+		let detailViewController = sender.sourceViewController as! DetailViewController
+		viewModel.checkInsert(detailViewController.viewModel)
 		tableView.reloadData()
 	}
+
+	func segueToDetailWithSelected(selected: Int?) {
+		viewModel.selectedRow = selected
+		performSegueWithIdentifier("DetailSegue", sender: self)
+	}
+
 }

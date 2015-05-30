@@ -42,6 +42,10 @@ class RxTableViewDelegate: NSObject, UITableViewDelegate {
 	var rx_didSelectRowAtIndexPath: Observable<NSIndexPath> {
 		return _didSelectRowAtIndexPath
 	}
+	
+	var rx_didDeselectRowAtIndexPath: Observable<NSIndexPath> {
+		return _didDeselectRowAtIndexPath
+	}
 
 	// MARK: Boilerplate
 	func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -67,6 +71,10 @@ class RxTableViewDelegate: NSObject, UITableViewDelegate {
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		sendNext(_didSelectRowAtIndexPath, indexPath)
 	}
+	
+	func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+		sendNext(_didDeselectRowAtIndexPath, indexPath)
+	}
 
 	private let _willDisplayCellForRowAtIndexPath: Subject<(cell: UITableViewCell, indexPath: NSIndexPath)> = Subject()
 	private let _willDisplayHeaderViewForSection: Subject<(view: UIView, section: Int)> = Subject()
@@ -75,5 +83,6 @@ class RxTableViewDelegate: NSObject, UITableViewDelegate {
 	private let _didEndDisplayingHeaderViewForSection: Subject<(view: UIView, section: Int)> = Subject()
 	private let _didEndDisplayingFooterViewForSection: Subject<(view: UIView, section: Int)> = Subject()
 	private let _didSelectRowAtIndexPath: Subject<NSIndexPath> = Subject()
+	private let _didDeselectRowAtIndexPath: Subject<NSIndexPath> = Subject()
 	
 }

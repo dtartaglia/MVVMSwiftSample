@@ -52,15 +52,11 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Payback" id="RJt-Xz-sRt">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="hDY-Ma-qCs">
-                            <connections>
-                                <segue destination="sen-0O-Dnc" kind="show" identifier="createSegue" id="uv5-gP-uJU"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="hDY-Ma-qCs"/>
                     </navigationItem>
                     <connections>
                         <outlet property="addBarButtonItem" destination="hDY-Ma-qCs" id="Chv-1z-m1T"/>
-                        <segue destination="sen-0O-Dnc" kind="show" identifier="SelectSegue" id="1Zx-ta-nQf"/>
+                        <segue destination="sen-0O-Dnc" kind="show" identifier="DetailSegue" id="1Zx-ta-nQf"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oxp-km-m0B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -131,7 +127,4 @@
             <point key="canvasLocation" x="1499" y="445"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="1Zx-ta-nQf"/>
-    </inferredMetricsTieBreakers>
 </document>
