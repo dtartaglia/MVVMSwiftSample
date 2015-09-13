@@ -46,7 +46,7 @@ class MasterTableViewController: UITableViewController {
 		tableView.dataSource = tableViewDataSource
 		tableView.delegate = tableViewDelegate
 
-		addBarButtonItem.rx_tap().subscribeNext({ [weak self] in
+		addBarButtonItem.rx_tap.subscribeNext({ [weak self] in
 				self!.segueToDetailWithSelected(nil)
 		}).addDisposableTo(disposeBag)
 	}
