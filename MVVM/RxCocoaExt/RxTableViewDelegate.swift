@@ -49,40 +49,40 @@ class RxTableViewDelegate: NSObject, UITableViewDelegate {
 
 	// MARK: Boilerplate
 	func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-		sendNext(_willDisplayCellForRowAtIndexPath, (cell: cell, indexPath: indexPath))
+		_willDisplayCellForRowAtIndexPath.on(.Next((cell: cell, indexPath: indexPath)))
 	}
 
 	func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-		sendNext(_willDisplayHeaderViewForSection, (view: view, section: section))
+		_willDisplayHeaderViewForSection.on(.Next((view: view, section: section)))
 	}
 	
 	func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-		sendNext(_willDisplayFooterViewForSection, (view: view, section: section))
+		_willDisplayFooterViewForSection.on(.Next((view: view, section: section)))
 	}
 	
 	func tableView(tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
-		sendNext(_didEndDisplayingHeaderViewForSection, (view: view, section: section))
+		_didEndDisplayingHeaderViewForSection.on(.Next((view: view, section: section)))
 	}
 	
 	func tableView(tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
-		sendNext(_didEndDisplayingFooterViewForSection, (view: view, section: section))
+		_didEndDisplayingFooterViewForSection.on(.Next((view: view, section: section)))
 	}
 	
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		sendNext(_didSelectRowAtIndexPath, indexPath)
+		_didSelectRowAtIndexPath.on(.Next(indexPath))
 	}
 	
 	func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-		sendNext(_didDeselectRowAtIndexPath, indexPath)
+		_didDeselectRowAtIndexPath.on(.Next(indexPath))
 	}
 
-	private let _willDisplayCellForRowAtIndexPath: Subject<(cell: UITableViewCell, indexPath: NSIndexPath)> = Subject()
-	private let _willDisplayHeaderViewForSection: Subject<(view: UIView, section: Int)> = Subject()
-	private let _willDisplayFooterViewForSection: Subject<(view: UIView, section: Int)> = Subject()
-	private let _didEndDisplayingCellForRowAtIndexPath: Subject<(cell: UITableViewCell, indexPath: NSIndexPath)> = Subject()
-	private let _didEndDisplayingHeaderViewForSection: Subject<(view: UIView, section: Int)> = Subject()
-	private let _didEndDisplayingFooterViewForSection: Subject<(view: UIView, section: Int)> = Subject()
-	private let _didSelectRowAtIndexPath: Subject<NSIndexPath> = Subject()
-	private let _didDeselectRowAtIndexPath: Subject<NSIndexPath> = Subject()
+	private let _willDisplayCellForRowAtIndexPath: PublishSubject<(cell: UITableViewCell, indexPath: NSIndexPath)> = PublishSubject()
+	private let _willDisplayHeaderViewForSection: PublishSubject<(view: UIView, section: Int)> = PublishSubject()
+	private let _willDisplayFooterViewForSection: PublishSubject<(view: UIView, section: Int)> = PublishSubject()
+	private let _didEndDisplayingCellForRowAtIndexPath: PublishSubject<(cell: UITableViewCell, indexPath: NSIndexPath)> = PublishSubject()
+	private let _didEndDisplayingHeaderViewForSection: PublishSubject<(view: UIView, section: Int)> = PublishSubject()
+	private let _didEndDisplayingFooterViewForSection: PublishSubject<(view: UIView, section: Int)> = PublishSubject()
+	private let _didSelectRowAtIndexPath: PublishSubject<NSIndexPath> = PublishSubject()
+	private let _didDeselectRowAtIndexPath: PublishSubject<NSIndexPath> = PublishSubject()
 	
 }

@@ -20,44 +20,35 @@ class MasterTableViewController: UITableViewController {
 
 	let disposeBag = DisposeBag()
 
-	deinit {
-		disposeBag.dispose()
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		tableViewDataSource = RxTableViewDataSource(numberOfRowsInSection: { [weak self] _ in
 			return self!.viewModel.rowCount
 			}, cellForRowAtIndexPath: { [weak self] indexPath in
-				let result = self!.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+				let result = self!.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
 				let tableViewModel = self!.viewModel.tableViewModelForIndex(indexPath.row)
 				result.textLabel!.text = tableViewModel.textLabelText
 				result.detailTextLabel!.text = tableViewModel.detailTextLabelText
 				return result
 			})
-		tableViewDataSource.rx_commitEditingStyleForRowAtIndexPath
-			>- subscribeNext { [weak self] editingStyle, indexPath in
+		tableViewDataSource.rx_commitEditingStyleForRowAtIndexPath.subscribeNext({ [weak self] editingStyle, indexPath in
 				if editingStyle == .Delete {
 					self!.viewModel.removePaybackAtIndex(indexPath.row)
 					self!.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 				}
-			}
-			>- disposeBag.addDisposable
+			}).addDisposableTo(disposeBag)
 
 		tableViewDelegate = RxTableViewDelegate()
-		tableViewDelegate.rx_didSelectRowAtIndexPath
-			>- subscribeNext { [weak self] indexPath in
+		tableViewDelegate.rx_didSelectRowAtIndexPath.subscribeNext({ [weak self] indexPath in
 				self!.segueToDetailWithSelected(indexPath.row)
-			}
-			>- disposeBag.addDisposable
+			}).addDisposableTo(disposeBag)
 
 		tableView.dataSource = tableViewDataSource
 		tableView.delegate = tableViewDelegate
 
-		addBarButtonItem.rx_tap()
-			>- subscribeNext { [weak self] in
+		addBarButtonItem.rx_tap().subscribeNext({ [weak self] in
 				self!.segueToDetailWithSelected(nil)
-		}
+		}).addDisposableTo(disposeBag)
 	}
 	
 	override func viewWillAppear(animated: Bool) {

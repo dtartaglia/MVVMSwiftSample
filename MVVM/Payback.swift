@@ -11,6 +11,6 @@ struct Payback {
     var amount = 0.0
 	
 	var isValid: Bool {
-		return count(firstName) > 0 && count(lastName) > 0 && amount > 0
+		return firstName.characters.count > 0 && lastName.characters.count > 0 && amount > 0
 	}
 }

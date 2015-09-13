@@ -31,7 +31,7 @@ struct DetailViewModel {
 	let title: String
 
 	var nameText: String {
-		if count(payback.firstName) > 0 || count(payback.lastName) > 0 {
+		if payback.firstName.characters.count > 0 || payback.lastName.characters.count > 0 {
 			return payback.firstName + " " + payback.lastName
 		}
 		else {
@@ -48,7 +48,7 @@ struct DetailViewModel {
 		}
 	}
 
-	mutating func updatePayback(# name: (firstName: String, lastName: String), amount: Double) {
+	mutating func updatePayback(name  name: (firstName: String, lastName: String), amount: Double) {
 		payback = Payback(firstName: name.firstName, lastName: name.lastName, createdAt: payback.createdAt, updatedAt: NSDate(), amount: amount)
 	}
 
@@ -60,12 +60,12 @@ struct DetailViewModel {
 		var firstName = ""
 		var lastName = ""
 		if let value = value {
-			let names = split(value) {$0 == " "}
+			let names = value.characters.split {$0 == " "}.map { String($0) }
 			if names.count > 0 {
 				firstName = names[0]
 			}
 			if names.count > 1 {
-				lastName = " ".join(names[1 ..< names.count])
+				lastName = names[1 ..< names.count].joinWithSeparator(" ")
 			}
 		}
 		return (firstName, lastName)

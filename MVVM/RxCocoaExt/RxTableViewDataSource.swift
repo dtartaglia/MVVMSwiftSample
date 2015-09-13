@@ -27,7 +27,7 @@ class RxTableViewDataSource: NSObject, UITableViewDataSource {
 	var canMoveRowAtIndexPath: ((indexPath: NSIndexPath) -> Bool)?
 
 	// Index
-	var sectionIndexTitles: (() -> [AnyObject])?
+	var sectionIndexTitles: (() -> [String])?
 	var sectionForSectionIndexTitleAtIndex: ((title: String, index: Int) -> Int)?
 
 	// Data manipulation - insert and delete support
@@ -98,7 +98,7 @@ class RxTableViewDataSource: NSObject, UITableViewDataSource {
 		}
 	}
 
-	func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+	func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
 		if let callback = sectionIndexTitles {
 			return callback()
 		}
@@ -117,14 +117,14 @@ class RxTableViewDataSource: NSObject, UITableViewDataSource {
 	}
 
 	func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-		sendNext(_commitEditingStyleForRowAtIndexPath, (editingStyle: editingStyle, indexPath: indexPath))
+		_commitEditingStyleForRowAtIndexPath.on(.Next((editingStyle: editingStyle, indexPath: indexPath)))
 	}
 
 	func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-		sendNext(_moveRowAtIndexPathToIndexPath, (sourceIndexPath: sourceIndexPath, destinationIndexPath: destinationIndexPath))
+		_moveRowAtIndexPathToIndexPath.on(.Next((sourceIndexPath: sourceIndexPath, destinationIndexPath: destinationIndexPath)))
 	}
 
-	private let _commitEditingStyleForRowAtIndexPath: Subject<(editingStyle: UITableViewCellEditingStyle, indexPath: NSIndexPath)> = Subject()
-	private let _moveRowAtIndexPathToIndexPath: Subject<(sourceIndexPath: NSIndexPath, destinationIndexPath: NSIndexPath)> = Subject()
+	private let _commitEditingStyleForRowAtIndexPath: PublishSubject<(editingStyle: UITableViewCellEditingStyle, indexPath: NSIndexPath)> = PublishSubject()
+	private let _moveRowAtIndexPathToIndexPath: PublishSubject<(sourceIndexPath: NSIndexPath, destinationIndexPath: NSIndexPath)> = PublishSubject()
 
 }
