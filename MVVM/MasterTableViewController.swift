@@ -22,6 +22,7 @@ class MasterTableViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
 		tableViewDataSource = RxTableViewDataSource(numberOfRowsInSection: { [weak self] _ in
 			return self!.viewModel.rowCount
 			}, cellForRowAtIndexPath: { [weak self] indexPath in

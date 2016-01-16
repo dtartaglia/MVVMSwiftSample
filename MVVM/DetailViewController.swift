@@ -71,6 +71,19 @@ class DetailViewController: UIViewController {
 				self!.performSegueWithIdentifier("Unwind", sender: self!)
 				})
 			.addDisposableTo(disposeBag)
+		
+		// this pipe sets the done button's enabled property based on the validity of the input fields
+		let validName = name.map {
+			DetailViewModel.nameValid($0.firstName, $0.lastName)
+		}
+		
+		let validAmount = amount.map {
+			DetailViewModel.amountValid($0)
+		}
+		
+		combineLatest(validName, validAmount, { $0 && $1 })
+			.bindTo(doneBarButtonItem.rx_enabled)
+			.addDisposableTo(disposeBag)
 	}
 	
 	func doneAction(name  name: (firstName: String, lastName: String), amount: Double) {
@@ -93,5 +106,5 @@ class DetailViewController: UIViewController {
 		presentViewController(alert, animated: true, completion: nil)
 		textField.becomeFirstResponder()
 	}
-	
+
 }
